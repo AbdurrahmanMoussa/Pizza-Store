@@ -4,15 +4,17 @@ import { useState } from "react";
 const CartOrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  // const [phone, setPhone] = useState("");
   const [error, setError] = useState(true);
+
+  let errorText = "Can't be empty";
 
   const handleCustomer = (e) => {
     if (e.target.value.length > 2) {
       setCustomer(e.target.value);
       setError(false);
     } else {
-      <p>Can't be empty</p>;
+      return <p>{errorText}</p>;
     }
   };
 
@@ -20,9 +22,9 @@ const CartOrderDetail = ({ total, createOrder }) => {
     setAddress(e.target.value);
   };
 
-  const handlePhone = (e) => {
-    setPhone(e.target.value);
-  };
+  // const handlePhone = (e) => {
+  //   setPhone(e.target.value);
+  // };
 
   const handleOrder = () => {
     createOrder({ customer, address, phoneNumber, total, method: 0 });
@@ -49,9 +51,9 @@ const CartOrderDetail = ({ total, createOrder }) => {
             className={styles.input}
             onChange={handleCustomer}
           />
-          {error ? <p>Can't be empty</p> : null}
+          {error ? <p>{errorText}</p> : null}
         </div>
-        <div className={styles.item}>
+        {/* <div className={styles.item}>
           <label className={styles.label}>Phone Number</label>
           <input
             placeholder="+1-(613)-444-4444"
@@ -60,7 +62,7 @@ const CartOrderDetail = ({ total, createOrder }) => {
             className={styles.input}
             onChange={handlePhone}
           />
-        </div>
+        </div> */}
 
         <div className={styles.item}>
           <label className={styles.label}>Address</label>
