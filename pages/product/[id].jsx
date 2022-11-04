@@ -24,6 +24,8 @@ const Product = ({ product }) => {
     const diff = product.prices[index] - product.prices[size];
     setSize(index);
 
+    console.log(product);
+
     {
       /* add difference in price to original price */
     }
