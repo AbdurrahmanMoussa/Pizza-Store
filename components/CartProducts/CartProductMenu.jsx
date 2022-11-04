@@ -11,7 +11,7 @@ const CartProductMenu = ({ products, menuOpen, setMenuOpen }) => {
 
   let content = null;
 
-  let backUpContent = (
+  let backUpContent = () => (
     <div className={styles.backupContainer}>
       <h1>Empty Cart</h1>
       <button
@@ -85,11 +85,13 @@ const CartProductMenu = ({ products, menuOpen, setMenuOpen }) => {
 
                 <li key={product._id}>
                   <div>
-                    <h4>{`${findSize(product)} ${product.title}`}</h4>
+                    <h4 key={uuid()}>{`${findSize(product)} ${
+                      product.title
+                    }`}</h4>
                     <div className={styles.extras}>
                       <h5>Extras:</h5>
                       {product.extras?.map((extra) => (
-                        <p>{extra.text}</p>
+                        <p key={uuid()}>{extra.text}</p>
                       ))}
                     </div>
                   </div>
@@ -116,7 +118,7 @@ const CartProductMenu = ({ products, menuOpen, setMenuOpen }) => {
             ))
           ) : (
             <Link href={"/product"} passHref>
-              {backUpContent}
+              {backUpContent()}
             </Link>
           )}
           <Link href="/cart" passHref>
