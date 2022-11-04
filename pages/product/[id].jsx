@@ -13,9 +13,7 @@ const Product = ({ product }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (cart.products?.length > 0) {
-      dispatch(getTotals());
-    }
+    dispatch(getTotals());
   }, [cart, dispatch]);
 
   const changePrice = (number) => {
