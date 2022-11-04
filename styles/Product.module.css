@@ -83,8 +83,9 @@
 }
 
 .quantity{
-    width: 50px;
+    width: 60px;
     height: 30px;
+    text-align: center;
 }
 
 .button{
@@ -97,6 +98,7 @@
     cursor: pointer;
 }
 
+
 @media screen and (max-width: 480px){
     .container{
         height: auto;
@@ -105,6 +107,7 @@
         margin-top: 20px;
     }
     .imgContainer{
+        margin-top: 0;
         width: 70vw;
         height: 70vw;
     }
@@ -128,9 +131,10 @@
     .checkbox{
         width: 20px;
         height: 20px;
+    
     }
     .quantity, .button{
-        height: 50px;
+        height: 40px;
         padding: 10px 20px;
     }
     .double{

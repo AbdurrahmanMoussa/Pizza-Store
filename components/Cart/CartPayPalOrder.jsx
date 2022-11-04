@@ -2,7 +2,13 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useEffect } from "react";
 
 // Custom component to wrap the PayPalButtons and handle currency changes
-const PayPalOrder = ({ currency, showSpinner, cart, amount, createOrder }) => {
+const CartPayPalOrder = ({
+  currency,
+  showSpinner,
+  cart,
+  amount,
+  createOrder,
+}) => {
   // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
   // This is the main reason to wrap the PayPalButtons in a new component
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -57,4 +63,4 @@ const PayPalOrder = ({ currency, showSpinner, cart, amount, createOrder }) => {
   );
 };
 
-export default PayPalOrder;
+export default CartPayPalOrder;

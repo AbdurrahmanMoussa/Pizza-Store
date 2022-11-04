@@ -18,7 +18,7 @@
 }
 
 .arrowContainer:hover{
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .wrapper{
@@ -71,12 +71,14 @@
 .orderNow{
     list-style: none;
     color: white;
+    background-color: #d1411e;
     font-weight: bold;
     z-index: 2;
-    font-size: 2.5rem;
+    font-size: 2rem;
     padding: 0.5rem;
-    border: 3px solid white;
+    border: 2px solid white;
     margin: 0.5rem;
+    border-radius: 5px;
     
 }
 

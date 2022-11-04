@@ -1,66 +1,75 @@
 import styles from "../../styles/Admin.module.css";
-import Image from "next/image";
+import { useState } from "react";
+import Link from "next/link";
+import AdminAddProductButton from "../../components/Product/AdminAddProductButton";
+import AdminProductTable from "../../components/Product/AdminProductTable";
 
-const Admin = () => {
+const Admin = ({ products, admin }) => {
+  const [pizzaList, setPizzaList] = useState(products);
+
+  const [close, setClose] = useState(true);
+
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      setPizzaList(
+        JSON.stringify(pizzaList.filter((pizza) => pizza._id !== id))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.item}>
-        <h1 className={styles.title}>Products</h1>
-        <table className={styles.table}>
-          <tbody>
-            <tr className={styles.trTitle}>
-              <th>Image</th>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
-            <tr className={styles.trTitle}>
-              <Image
-                src="/img/pizza1.png"
-                width="50"
-                height="50"
-                objectFit="cover"
-                alt="admin"
-              />
-              <td>PizzaID</td>
-              <td>PizzaTitle</td>
-              <td>$50</td>
-              <td>
-                <button className={styles.edit}>Edit</button>
-                <button className={styles.delete}>Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <>
+      <div className={styles.redirectBtns}>
+        {admin && <AdminAddProductButton setClose={setClose} />}
+        <Link href="/admin/order-list">
+          <a className={styles.orderList}>Order List Page</a>
+        </Link>
       </div>
-      <div className={styles.item}>
-        <h1 className={styles.title}>Orders</h1>
-        <table className={styles.table}>
-          <tbody>
-            <tr className={styles.trTitle}>
-              <th>ID</th>
-              <th>Customer</th>
-              <th>Total Price</th>
-              <th>Payment Method</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-            <tr className={styles.trTitle}>
-              <td>4332556765764</td>
-              <td>John Doe</td>
-              <td>$50</td>
-              <td>Paid</td>
-              <td>Preparing</td>
-              <td>
-                <button className={styles.button}>Next Stage</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <AdminProductTable
+        close={close}
+        handleDelete={handleDelete}
+        pizzaList={pizzaList}
+        setClose={setClose}
+      />
+    </>
   );
+};
+
+export const getServerSideProps = async (ctx) => {
+  const myCookie = ctx.req?.cookies || "";
+
+  let admin = false;
+
+  if (myCookie.token === process.env.TOKEN) {
+    admin = true;
+  } else {
+    return {
+      redirect: {
+        destination: "/admin/login",
+        permanent: false,
+      },
+    };
+  }
+  const productRes = await fetch("http://localhost:3000/api/products", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const productData = await productRes.json();
+
+  return {
+    props: {
+      products: productData,
+      admin,
+    },
+  };
 };
 
 export default Admin;

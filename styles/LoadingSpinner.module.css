@@ -1,0 +1,30 @@
+.spinner {
+ position: sticky;
+ display: flex;
+ flex-direction: row;
+ top: 0;
+ bottom: 0;
+ z-index: 1000;
+ margin-top: -140%;
+ margin-left: 45%;
+
+}
+.spinner:after {
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid teal;
+  border-color: teal transparent teal transparent;
+  animation: spinner 1.2s linear infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

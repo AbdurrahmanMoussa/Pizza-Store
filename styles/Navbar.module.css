@@ -1,7 +1,7 @@
 .container{
     height: 100px;
     padding: 0px 50px;
-    background-color: #d1411e;
+    background-color: #af1920;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -9,6 +9,7 @@
     top: 0;
     z-index: 10;
     overflow: hidden;
+    width: 100%;
 }
 
 .item{
@@ -33,21 +34,32 @@
     height: 50px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .texts{
     margin-left : 20px;
+
     color: white;
+    text-align: center;
+   
 }
 
 .text:first-child{
     font-size: 12px;
     font-weight: bold;
+    margin-bottom: 2px;
 }
 .cartIcon{
     color: white;
+    cursor: pointer;
 }
 
+.cartIcon:hover{
+ 
+    font-size: 2.5rem;
+       color: #f4e9e9;
+}
 .list{
     padding: 0;
     display: flex;
@@ -64,6 +76,7 @@
 
 .cart{
     position: relative;
+    
 
 }
 
@@ -71,9 +84,9 @@
     position: absolute;
     top: -10px;
     right: -10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    border-radius: 90%;
     background-color: white;
     padding: 3px;
     display: flex;
@@ -82,10 +95,16 @@
     font-weight: bold;
     color: #d1411e;
 }
+.listItem:hover{
+ 
+    padding: 0;
+    border-bottom: 5px solid rgb(183, 227, 231);
+}
 
 @media (max-width: 1000px){
     .text{
-    font-size: small;}
+    font-size: small;
+margin-bottom: 0;}
       /* .cartIcon{
        display: flex;
         font-size: small;
@@ -102,5 +121,7 @@
 .item:nth-child(1){
     flex: 3;
 }
+
+
 
 }

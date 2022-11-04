@@ -1,8 +1,16 @@
 import styles from "../../styles/Cart.module.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PayPalOrder from "./PayPalOrder";
+import CartPayPalOrder from "./CartPayPalOrder";
 
-const OrderTotal = ({ amount, setCashSelected, cart, open, setOpen }) => {
+const CartOrderTotal = ({
+  amount,
+  cart,
+  createOrder,
+  currency,
+  open,
+  setCashSelected,
+  setOpen,
+}) => {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>CART TOTAL</h2>
@@ -10,7 +18,7 @@ const OrderTotal = ({ amount, setCashSelected, cart, open, setOpen }) => {
         <b className={styles.totalTextTitle}>Subtotal: </b>${cart.totalPrice}
       </div>
       <div className={styles.totalText}>
-        <b className={styles.totalTextTitle}>Tax: </b>${cart.tax.toFixed(2)}
+        <b className={styles.totalTextTitle}>Tax: </b>${cart?.tax?.toFixed(2)}
       </div>
       <div className={styles.totalText}>
         <b className={styles.totalTextTitle}>Total: </b>${amount}
@@ -32,7 +40,7 @@ const OrderTotal = ({ amount, setCashSelected, cart, open, setOpen }) => {
               "disable-funding": "credit,card,p24",
             }}
           >
-            <PayPalOrder
+            <CartPayPalOrder
               currency={currency}
               showSpinner={false}
               createOrder={createOrder}
@@ -43,7 +51,7 @@ const OrderTotal = ({ amount, setCashSelected, cart, open, setOpen }) => {
         </div>
       ) : (
         <button
-          disabled={cart.products.length === 0}
+          disabled={cart?.products?.length === 0}
           onClick={() => setOpen(true)}
           className={styles.button}
         >
@@ -54,4 +62,4 @@ const OrderTotal = ({ amount, setCashSelected, cart, open, setOpen }) => {
   );
 };
 
-export default OrderTotal;
+export default CartOrderTotal;

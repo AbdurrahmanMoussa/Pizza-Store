@@ -1,10 +1,10 @@
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, menuOpen, setMenuOpen }) => {
   return (
     <>
-      <Navbar />
+      <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       {children}
       <Footer />
     </>

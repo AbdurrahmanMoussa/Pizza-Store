@@ -4,10 +4,21 @@ import PhoneInTalkIcon from "@material-ui/icons/PhoneInTalk";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import CartProductMenu from "../CartProducts/CartProductMenu";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const quantity = useSelector((state) => state.cart.cartTotal);
+  const products = useSelector((state) => state.cart.products);
 
+  const showCounter = () => {
+    if (quantity > 0) {
+      return <div className={styles.counter}>{quantity}</div>;
+    } else {
+      return "";
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -24,22 +35,37 @@ const Navbar = () => {
           <Link href="/">
             <li className={styles.listItem}>Homepage</li>
           </Link>
-          <li className={styles.listItem}>Products</li>
-          <li className={styles.listItem}>Menu</li>
+          <Link href={"/product"}>
+            <li className={styles.listItem}>Products</li>
+          </Link>
+          <Link href="/menu">
+            <li className={styles.listItem}>Menu</li>
+          </Link>
           <Image src="/img/logo.png" width="150px" height="60px" />
-          <li className={styles.listItem}>Events</li>
-          <li className={styles.listItem}>About Us</li>
-          <li className={styles.listItem}>Contact</li>
+          <Link href="/about-us">
+            <li className={styles.listItem}>About Us</li>
+          </Link>
+          <Link href="/contact">
+            <li className={styles.listItem}>Contact</li>
+          </Link>
         </ul>
       </div>
-      <Link href="/cart">
-        <div className={styles.item}>
-          <div className={styles.cart}>
-            <ShoppingCart fontSize="large" className={styles.cartIcon} />
-            <div className={styles.counter}>{quantity}</div>
-          </div>
+
+      <div className={styles.item}>
+        <div className={styles.cart}>
+          <ShoppingCart
+            fontSize="large"
+            className={styles.cartIcon}
+            onClick={() => setMenuOpen(!menuOpen)}
+          />
+          {showCounter()}
+          <CartProductMenu
+            products={products}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+          />
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

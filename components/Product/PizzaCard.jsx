@@ -5,12 +5,18 @@ import Link from "next/link";
 function PizzaCard({ pizza }) {
   return (
     <div className={styles.container}>
-      <Link href={`/product/${pizza._id}`} passHref>
-        <Image src={pizza.image} alt="" width="500" height="500" />
-      </Link>
       <h1 className={styles.title}>{pizza.title}</h1>
-      <span className={styles.price}>{pizza.prices[0]}</span>
-      <p className={styles.desc}>{pizza.description}</p>
+      <Link href={`/product/${pizza._id}`} passHref>
+        <a>
+          <Image
+            className={styles.image}
+            src={pizza.image}
+            alt=""
+            width="600"
+            height="800"
+          />
+        </a>
+      </Link>
     </div>
   );
 }

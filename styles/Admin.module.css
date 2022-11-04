@@ -1,0 +1,131 @@
+.container{
+    padding: 50px;
+    display: flex;
+    overflow: hidden;
+
+}
+
+.item{
+    flex: 1;
+    margin-top: -4rem;
+  
+}
+.title{text-align: center;}
+.content{
+
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.content thead tr{
+    background-color: #92181e;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.content tbody tr{
+    text-align: center;
+    font-weight: 500;
+    font-size: medium;
+    text-transform: capitalize;
+}
+
+.content th, .content td{
+    padding: 8px 12px;
+}
+
+.content tbody tr{
+    border-bottom: 1px solid #dddd;
+
+}
+.content tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+
+.content tbody tr:last-of-type{
+    border-bottom: 1.5px solid #000000;
+}
+
+.content tr:hover td{background-color:rgb(191, 218, 234);}
+
+.content button{
+    border: none;
+    padding: 12px 15px;
+   background-color: #92181e;
+    font-weight:600;
+    color: #f3f3f3;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+.button{
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.button:first-child{
+    background-color: teal;
+    margin-right: 10px;
+}
+
+.button:last-child{
+    background-color: #ad1a22;
+}
+
+.orderList{
+      padding: 10px;
+    margin: 20px;
+    background-color: #92181e;
+    width: 150px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+   
+}
+
+.orderList:hover{
+    background-color: rgb(79, 11, 11);
+
+}
+
+.redirectBtns{
+    margin: 2rem;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+@media(max-width: 790px){
+    
+   .content {
+    display: block;
+    max-width: 100%;
+    margin-left: -2.5rem;
+    padding: auto;
+    overflow: hidden;} 
+   .content, .content tbody, .content tr, .content td{ 
+ 
+    width: 100%;
+   }
+    /* .button{
+   display: none;
+    
+  } */
+   /* .orderList{
+    display: none;
+   } */
+  
+}

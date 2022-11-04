@@ -1,20 +1,40 @@
 import styles from "../../styles/OrderDetail.module.css";
 import { useState } from "react";
 
-const OrderDetail = ({ total, createOrder }) => {
+const CartOrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
   const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState(true);
 
   const handleCustomer = (e) => {
-    setCustomer(e.target.value);
+    if (e.target.value.length > 2) {
+      setCustomer(e.target.value);
+      setError(false);
+    } else {
+      <p>Can't be empty</p>;
+    }
   };
 
   const handleAddress = (e) => {
     setAddress(e.target.value);
   };
 
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+  };
+
   const handleOrder = () => {
-    createOrder({ customer, address, total, method: 0 });
+    createOrder({ customer, address, phoneNumber, total, method: 0 });
+  };
+
+  const handleOrderError = () => {
+    if (customer === "" || address === "") {
+      setError(true);
+    } else {
+      setError(false);
+      handleOrder();
+    }
   };
 
   return (
@@ -29,14 +49,16 @@ const OrderDetail = ({ total, createOrder }) => {
             className={styles.input}
             onChange={handleCustomer}
           />
+          {error ? <p>Can't be empty</p> : null}
         </div>
         <div className={styles.item}>
           <label className={styles.label}>Phone Number</label>
           <input
             placeholder="+1-(613)-444-4444"
             type="text"
+            x
             className={styles.input}
-            // onChange={handlePhone}
+            onChange={handlePhone}
           />
         </div>
 
@@ -49,7 +71,11 @@ const OrderDetail = ({ total, createOrder }) => {
             onChange={handleAddress}
           />
         </div>
-        <button className={styles.orderButton} onClick={handleOrder}>
+        <button
+          className={styles.orderButton}
+          onClick={handleOrderError}
+          disabled={error}
+        >
           Order
         </button>
       </div>
@@ -57,4 +83,4 @@ const OrderDetail = ({ total, createOrder }) => {
   );
 };
 
-export default OrderDetail;
+export default CartOrderDetail;

@@ -1,20 +1,27 @@
 import styles from "../../styles/Product.module.css";
 import Image from "next/image";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../redux/cartSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct, getTotals } from "../../redux/cartSlice";
 
 const Product = ({ product }) => {
   const [size, setSize] = useState(0);
   const [price, setPrice] = useState(product.prices[0]);
   const [extras, setExtras] = useState([]);
   const [quantity, setQuantity] = useState(1);
-
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (cart.products?.length > 0) {
+      dispatch(getTotals());
+    }
+  }, [cart, dispatch]);
 
   const changePrice = (number) => {
     setPrice(price + number);
   };
+
   const handleSize = (index) => {
     const diff = product.prices[index] - product.prices[size];
     setSize(index);
@@ -51,7 +58,13 @@ const Product = ({ product }) => {
     <div className={styles.container}>
       <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image src={product.image} layout="fill" objectFit="contain" alt="" />
+          <Image
+            src={product.image}
+            layout="fill"
+            objectFit="contain"
+            alt=""
+            priority
+          />
         </div>
       </div>
       <div className={styles.right}>
@@ -106,8 +119,6 @@ const Product = ({ product }) => {
               </label>
             </div>
           ))}
-
-          {/* Add vegetable options here if pizza is vegetable look at other pizza sites */}
         </div>
         <div className={styles.add}>
           <input
@@ -115,8 +126,9 @@ const Product = ({ product }) => {
               setQuantity(e.target.value);
             }}
             type="number"
-            defaultValue={1}
+            value={quantity}
             className={styles.quantity}
+            min="1"
           />
 
           <button className={styles.button} onClick={handleAddToCart}>

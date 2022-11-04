@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Featured from "../components/Featured/Featured";
 import styles from "../styles/Home.module.css";
-import PizzaList from "../components/pizza/PizzaList";
-
+import PizzaList from "../components/Product/PizzaList";
 export default function Home({ pizzaList }) {
   return (
     <div className={styles.container}>
@@ -11,8 +10,8 @@ export default function Home({ pizzaList }) {
         <meta name="description" content="Best Pizza in Ottawa" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Featured />
-      {console.log(pizzaList)}
+      <Featured pizzaList={pizzaList} />
+
       <PizzaList pizzaList={pizzaList} />
     </div>
   );

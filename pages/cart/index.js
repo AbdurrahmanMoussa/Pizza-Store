@@ -1,11 +1,11 @@
 import styles from "../../styles/Cart.module.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import OrderDetail from "../../components/Order/OrderDetail";
+import CartOrderDetail from "../../components/Cart/CartOrderDetail";
 import useOrder from "../../hooks/use-order";
-import PayPalOrder from "../../components/Order/PayPalOrder";
-import OrderItem from "../../components/Order/OrderItem";
-import OrderTotal from "../../components/Order/OrderTotal";
+import CartPayPalOrder from "../../components/Cart/CartPayPalOrder";
+import CartOrderItem from "../../components/Cart/CartItem";
+import CartOrderTotal from "../../components/Cart/CartOrderTotal";
 
 const Cart = () => {
   const [open, setOpen] = useState(false);
@@ -15,26 +15,26 @@ const Cart = () => {
   const amount = (cart.totalPrice + cart.tax).toFixed(2);
   const { createOrder } = useOrder();
 
-  <PayPalOrder />;
+  <CartPayPalOrder />;
+
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.left}>
-          <OrderItem cart={cart} />
-        </div>
+        <div className={styles.left}>{<CartOrderItem cart={cart} />}</div>
 
         <div className={styles.right}>
-          <OrderTotal
+          <CartOrderTotal
             amount={amount}
             currency={currency}
             cart={cart}
+            createOrder={createOrder}
             open={open}
             setCashSelected={setCashSelected}
             setOpen={setOpen}
           />
         </div>
         {cashSelected ? (
-          <OrderDetail total={amount} createOrder={createOrder} />
+          <CartOrderDetail total={amount} createOrder={createOrder} />
         ) : (
           ""
         )}
