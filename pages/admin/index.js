@@ -57,19 +57,38 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  const productRes = await fetch("http://localhost:3000/api/products", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  if (process.env.NODE_ENV === "development") {
+    const productRes = await fetch("http://localhost:3000/api/products", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-  const productData = await productRes.json();
+    const productData = await productRes.json();
 
-  return {
-    props: {
-      products: productData,
-      admin,
-    },
-  };
+    return {
+      props: {
+        products: productData,
+        admin,
+      },
+    };
+  } else {
+    const productRes = await fetch(
+      "https://pizza-store-seven-self.vercel.app/api/products",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const productData = await productRes.json();
+
+    return {
+      props: {
+        products: productData,
+        admin,
+      },
+    };
+  }
 };
 
 export default Admin;

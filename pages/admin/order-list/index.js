@@ -11,17 +11,35 @@ const OrderList = ({ orders }) => {
     const currentStatus = item.status;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/orders/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: currentStatus + 1 }),
-      });
+      if (process.env.NODE_ENV === "development") {
+        const res = await fetch(`http://localhost:3000/api/orders/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: currentStatus + 1 }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      setOrderList([data, ...orderList.filter((order) => order._id !== id)]);
-      if (currentStatus >= 2) {
-        setOrderList(orderList.filter((order) => order._id !== id));
+        setOrderList([data, ...orderList.filter((order) => order._id !== id)]);
+        if (currentStatus >= 2) {
+          setOrderList(orderList.filter((order) => order._id !== id));
+        }
+      } else {
+        const res = await fetch(
+          `https://pizza-store-seven-self.vercel.app/api/orders/${id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: currentStatus + 1 }),
+          }
+        );
+
+        const data = await res.json();
+
+        setOrderList([data, ...orderList.filter((order) => order._id !== id)]);
+        if (currentStatus >= 2) {
+          setOrderList(orderList.filter((order) => order._id !== id));
+        }
       }
     } catch (err) {
       console.log(err);
@@ -31,11 +49,22 @@ const OrderList = ({ orders }) => {
   const handleDelete = async (id) => {
     console.log(id);
     try {
-      const res = await fetch(`http://localhost:3000/api/orders/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      setOrderList(orderList.filter((order) => order._id !== id));
+      if (process.env.NODE_ENV === "development") {
+        await fetch(`http://localhost:3000/api/orders/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+        setOrderList(orderList.filter((order) => order._id !== id));
+      } else {
+        await fetch(
+          `https://pizza-store-seven-self.vercel.app/api/orders/${id}`,
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        setOrderList(orderList.filter((order) => order._id !== id));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +107,7 @@ const OrderList = ({ orders }) => {
                     Next Stage
                   </button>
                 )}
-                {/* add onClick event to Remove button to remove Order from list */}
+
                 {order.status >= 2 && (
                   <button
                     onClick={() => {

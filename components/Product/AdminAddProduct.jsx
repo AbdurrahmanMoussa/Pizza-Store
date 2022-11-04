@@ -81,13 +81,19 @@ const AdminAddProduct = ({ setClose, close }) => {
         options: product.options,
         image: url,
       };
-
-      await fetch("http://localhost:3000/api/products", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(newProduct),
-      });
-
+      if (process.env.NODE_ENV === "development") {
+        await fetch("http://localhost:3000/api/products", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(newProduct),
+        });
+      } else {
+        await fetch("https://pizza-store-seven-self.vercel.app/api/products", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(newProduct),
+        });
+      }
       setClose(true);
       setIsLoading(false);
       router.push("/admin");

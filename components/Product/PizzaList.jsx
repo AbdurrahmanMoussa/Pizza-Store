@@ -1,6 +1,5 @@
 import styles from "../../styles/PizzaList.module.css";
 import PizzaCard from "./PizzaCard";
-import uuid from "react-uuid";
 
 const PizzaList = (props) => {
   return (

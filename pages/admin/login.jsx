@@ -10,20 +10,41 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/login", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
+      if (process.env.NODE_ENV === "development") {
+        const res = await fetch("http://localhost:3000/api/login", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await res.json();
 
-      router.push("/admin");
-      if (data.status === 200) {
-        error.current = false;
+        router.push("/admin");
+        if (data.status === 200) {
+          error.current = false;
+        } else {
+          throw new Error(data.message);
+        }
       } else {
-        throw new Error(data.message);
+        const res = await fetch(
+          "https://pizza-store-seven-self.vercel.app//api/login",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+          }
+        );
+        const data = await res.json();
+
+        router.push("/admin");
+        if (data.status === 200) {
+          error.current = false;
+        } else {
+          throw new Error(data.message);
+        }
       }
     } catch (err) {
       error.current = true;

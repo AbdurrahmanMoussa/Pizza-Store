@@ -7,19 +7,39 @@ const useOrder = () => {
   const dispatch = useDispatch();
   const createOrder = async (data) => {
     try {
-      const res = await fetch("http://localhost:3000/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      if (process.env.NODE_ENV === "development") {
+        const res = await fetch("http://localhost:3000/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
-      const order = await res.json();
+        const order = await res.json();
 
-      if (res.ok) {
-        dispatch(reset());
-        router.push(`/orders/${order._id}`);
+        if (res.ok) {
+          dispatch(reset());
+          router.push(`/orders/${order._id}`);
+        }
+      } else {
+        const res = await fetch(
+          "https://pizza-store-seven-self.vercel.app/api/orders",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+
+        const order = await res.json();
+
+        if (res.ok) {
+          dispatch(reset());
+          router.push(`/orders/${order._id}`);
+        }
       }
     } catch (err) {
       console.log(err);

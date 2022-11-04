@@ -116,18 +116,35 @@ const Order = ({ order }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const req = await fetch(`http://localhost:3000/api/orders/${params.id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  if (process.env.NODE_ENV === "development") {
+    const req = await fetch(`http://localhost:3000/api/orders/${params.id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const res = await req.json();
+    const res = await req.json();
 
-  return {
-    props: { order: res },
-  };
+    return {
+      props: { order: res },
+    };
+  } else {
+    const req = await fetch(
+      `https://pizza-store-seven-self.vercel.app/api/orders/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const res = await req.json();
+
+    return {
+      props: { pizzaList: res },
+    };
+  }
 };
 
 export default Order;
