@@ -21,15 +21,17 @@ const Product = ({ product }) => {
   };
 
   const handleSize = (index) => {
-    const diff = product.prices[index] - product.prices[size];
-    setSize(index);
+    if (product?.prices) {
+      const diff = product?.prices[index] - product?.prices[size];
+      setSize(index);
 
-    console.log(product);
+      console.log(product);
 
-    {
-      /* add difference in price to original price */
+      {
+        /* add difference in price to original price */
+      }
+      changePrice(diff);
     }
-    changePrice(diff);
   };
 
   const handleChange = (e, option) => {

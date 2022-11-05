@@ -47,7 +47,6 @@ const OrderList = ({ orders }) => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       if (process.env.NODE_ENV === "development") {
         await fetch(`http://localhost:3000/api/orders/${id}`, {
