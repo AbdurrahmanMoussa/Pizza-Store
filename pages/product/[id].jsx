@@ -168,7 +168,7 @@ export const getServerSideProps = async ({ params }) => {
     const res = await req.json();
 
     return {
-      props: { pizzaList: res },
+      props: { product: res },
     };
   }
 };
