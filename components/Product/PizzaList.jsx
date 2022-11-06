@@ -1,7 +1,8 @@
 import styles from "../../styles/PizzaList.module.css";
 import PizzaCard from "./PizzaCard";
+import { setBackgroundColors } from "../../util/setBackgroundColors";
 
-const PizzaList = (props) => {
+const PizzaList = ({ pizzaList }) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>THE BEST PIZZA IN OTTAWA</h1>
@@ -10,8 +11,14 @@ const PizzaList = (props) => {
       </p>
 
       <div className={styles.wrapper}>
-        {props.pizzaList?.map((pizza) => (
-          <PizzaCard pizza={pizza} key={pizza._id} />
+        {pizzaList?.map((pizza, index) => (
+          <PizzaCard
+            pizza={pizza}
+            key={pizza._id}
+            backgroundColor={
+              setBackgroundColors[index % setBackgroundColors.length]
+            }
+          />
         ))}
       </div>
     </div>

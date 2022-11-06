@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import AdminAddProductForm from "./AdminAddProductForm";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import Card from "../UI/Card";
 import { useRouter } from "next/router";
 
 const AdminAddProduct = ({ setClose, close }) => {
@@ -66,14 +65,22 @@ const AdminAddProduct = ({ setClose, close }) => {
 
     data.append("file", file);
     data.append("upload_preset", "uploads");
+
+    const config = {
+      method: "POST",
+      body: data,
+    };
+
+    let imgUrl = "https://api.cloudinary.com/v1_1/dydzf1y9j/image/upload";
+
     try {
-      const upload = await fetch(
-        "https://api.cloudinary.com/v1_1/dydzf1y9j/image/upload",
-        { method: "POST", body: JSON.stringify(data) }
-      );
+      const upload = await fetch(imgUrl, config);
       const res = await upload.json();
 
       const { url } = res;
+      console.log(url);
+      console.log(res);
+
       const newProduct = {
         title: product.title,
         desc: product.desc,
@@ -81,22 +88,32 @@ const AdminAddProduct = ({ setClose, close }) => {
         options: product.options,
         image: url,
       };
-      if (process.env.NODE_ENV === "development") {
-        await fetch("http://localhost:3000/api/products", {
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-          body: JSON.stringify(newProduct),
-        });
-      } else {
-        await fetch("https://pizza-store-seven-self.vercel.app/api/products", {
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-          body: JSON.stringify(newProduct),
-        });
-      }
+
+      console.log(newProduct);
+      await fetch("http://localhost:3000/api/products", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(newProduct),
+      });
+
+      // if (process.env.NODE_ENV === "development") {}
+      //   await fetch("http://localhost:3000/api/products", {
+      //     headers: { "Content-Type": "application/json" },
+      //     method: "POST",
+      //     body: JSON.stringify(newProduct),
+      //   });
+      //  } else {
+      //   await fetch("https://pizza-store-seven-self.vercel.app/api/products", {
+      //     headers: { "Content-Type": "application/json" },
+      //     method: "POST",
+      //     body: JSON.stringify(newProduct),
+      //   });
+      // }
+      router.push("/admin");
       setClose(true);
       setIsLoading(false);
-      router.push("/admin");
     } catch (err) {
       console.log(err);
     }
@@ -128,12 +145,6 @@ const AdminAddProduct = ({ setClose, close }) => {
         </p>
         <LoadingSpinner />
       </div>
-    );
-  } else {
-    modalContent = (
-      <Card>
-        <h1>Success! Refresh to see new product!</h1>
-      </Card>
     );
   }
 

@@ -10,7 +10,6 @@ const Admin = ({ products, admin }) => {
   const [close, setClose] = useState(true);
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
       const res = await fetch(`http://localhost:3000/api/products/${id}`, {
         method: "DELETE",
@@ -24,6 +23,25 @@ const Admin = ({ products, admin }) => {
     }
   };
 
+  // const handleEdit = async (id) => {
+  //   try {
+  //     const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //     });
+
+  //     const data = await res.json();
+
+  //     setPizzaList(
+  //       JSON.stringify(
+  //         pizzaList.map((pizza) => (pizza._id === id ? data : pizza))
+  //       )
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   return (
     <>
       <div className={styles.redirectBtns}>
@@ -35,6 +53,7 @@ const Admin = ({ products, admin }) => {
       <AdminProductTable
         close={close}
         handleDelete={handleDelete}
+        // handleEdit={handleEdit}
         pizzaList={pizzaList}
         setClose={setClose}
       />

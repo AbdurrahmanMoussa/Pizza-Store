@@ -1,8 +1,20 @@
-import AdminAddProduct from "./AdminAddProduct";
 import styles from "../../styles/Admin.module.css";
 import Image from "next/image";
+import React from "react";
+import AdminAddProduct from "./AdminAddProduct";
+// import AdminEditProduct from "./AdminEditProduct";
 
-const AdminProductTable = ({ close, handleDelete, pizzaList, setClose }) => {
+const AdminProductTable = ({
+  close,
+  handleDelete,
+  handleEdit,
+  pizzaList,
+  setClose,
+}) => {
+  //figure out how to pass props through button onclick
+
+  const ref = React.createRef();
+  const EditButton = null;
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -33,7 +45,24 @@ const AdminProductTable = ({ close, handleDelete, pizzaList, setClose }) => {
                 <td>{product.title}</td>
                 <td>${product.prices[0]}</td>
                 <td>
-                  <button className={styles.button}>Edit</button>
+                  <button
+                    // ref={ref}
+                    className={styles.button}
+                    // onClick={() => {
+                    //   <AdminEditProduct
+                    //     handleEdit={handleEdit}
+                    //     msg={"EDIT"}
+                    //     id={product._id}
+                    //     title={product.title}
+                    //     desc={product.desc}
+                    //     image={product.image}
+                    //     prices={product.prices}
+                    //   />;
+                    //   // setClose(false);
+                    // }}
+                  >
+                    Edit
+                  </button>
                   <button
                     className={styles.button}
                     onClick={() => handleDelete(product._id)}
