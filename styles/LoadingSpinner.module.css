@@ -2,12 +2,10 @@
  position: sticky;
  display: flex;
  flex-direction: row;
- top: 0;
- bottom: 0;
  z-index: 1000;
- margin-top: -140%;
+margin-top: -70%;
  margin-left: 45%;
-
+ top: 0;
 }
 .spinner:after {
   content: ' ';
@@ -26,5 +24,12 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .spinner {
+    margin-top: -140%;
+    margin-left: 45%;
   }
 }
