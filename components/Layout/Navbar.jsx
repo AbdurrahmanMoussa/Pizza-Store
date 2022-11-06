@@ -48,6 +48,9 @@ const Navbar = () => {
           <Link href="/contact">
             <li className={styles.listItem}>Contact</li>
           </Link>
+          <Link href="/admin">
+            <li className={styles.listItem}>Admin</li>
+          </Link>
         </ul>
       </div>
 
