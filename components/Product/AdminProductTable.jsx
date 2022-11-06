@@ -11,9 +11,6 @@ const AdminProductTable = ({
   pizzaList,
   setClose,
 }) => {
-  //figure out how to pass props through button onclick
-
-  const ref = React.createRef();
   const EditButton = null;
   return (
     <div className={styles.container}>
@@ -29,7 +26,7 @@ const AdminProductTable = ({
               <th>Action</th>
             </tr>
           </thead>
-          {pizzaList.map((product) => (
+          {pizzaList?.map((product) => (
             <tbody key={product._id}>
               <tr className={styles.trTitle}>
                 <td>

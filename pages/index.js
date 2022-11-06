@@ -2,6 +2,8 @@ import Head from "next/head";
 import Featured from "../components/Featured/Featured";
 import styles from "../styles/Home.module.css";
 import PizzaList from "../components/Product/PizzaList";
+import { BASE_URL } from "../util/setBaseUrl";
+
 export default function Home({ pizzaList }) {
   return (
     <div className={styles.container}>
@@ -18,33 +20,16 @@ export default function Home({ pizzaList }) {
 }
 
 export const getServerSideProps = async () => {
-  if (process.env.NODE_ENV === "development") {
-    const req = await fetch("http://localhost:3000/api/products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const req = await fetch(`${BASE_URL}/api/products`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const res = await req.json();
+  const res = await req.json();
 
-    return {
-      props: { pizzaList: res },
-    };
-  } else {
-    const req = await fetch(
-      "https://pizza-store-seven-self.vercel.app/api/products",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const res = await req.json();
-
-    return {
-      props: { pizzaList: res },
-    };
-  }
+  return {
+    props: { pizzaList: res },
+  };
 };

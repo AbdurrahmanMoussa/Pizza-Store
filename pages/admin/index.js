@@ -3,21 +3,26 @@ import { useState } from "react";
 import Link from "next/link";
 import AdminAddProductButton from "../../components/Product/AdminAddProductButton";
 import AdminProductTable from "../../components/Product/AdminProductTable";
+import { useRouter } from "next/router";
+import { BASE_URL } from "../../util/setBaseUrl";
 
-const Admin = ({ products, admin }) => {
+const Admin = ({ products }) => {
   const [pizzaList, setPizzaList] = useState(products);
 
   const [close, setClose] = useState(true);
 
+  const router = useRouter();
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/products/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
       setPizzaList(
         JSON.stringify(pizzaList.filter((pizza) => pizza._id !== id))
       );
+
+      return router.reload();
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +50,7 @@ const Admin = ({ products, admin }) => {
   return (
     <>
       <div className={styles.redirectBtns}>
-        {admin && <AdminAddProductButton setClose={setClose} />}
+        {<AdminAddProductButton setClose={setClose} />}
         <Link href="/admin/order-list">
           <a className={styles.orderList}>Order List Page</a>
         </Link>
@@ -76,38 +81,19 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
-  if (process.env.NODE_ENV === "development") {
-    const productRes = await fetch("http://localhost:3000/api/products", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
 
-    const productData = await productRes.json();
+  const productRes = await fetch(`${BASE_URL}/api/products`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
 
-    return {
-      props: {
-        products: productData,
-        admin,
-      },
-    };
-  } else {
-    const productRes = await fetch(
-      "https://pizza-store-seven-self.vercel.app/api/products",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+  const productData = await productRes.json();
 
-    const productData = await productRes.json();
-
-    return {
-      props: {
-        products: productData,
-        admin,
-      },
-    };
-  }
+  return {
+    props: {
+      products: productData,
+    },
+  };
 };
 
 export default Admin;

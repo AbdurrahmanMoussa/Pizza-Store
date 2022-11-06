@@ -1,8 +1,8 @@
 import styles from "../../styles/Order.module.css";
 import Image from "next/image";
+import { BASE_URL } from "../../util/setBaseUrl";
 
 const Order = ({ order }) => {
-  console.log(order);
   const status = order?.status;
   const statusClass = (index) => {
     if (index - status < 1) return styles.done;
@@ -116,35 +116,18 @@ const Order = ({ order }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  if (process.env.NODE_ENV === "development") {
-    const req = await fetch(`http://localhost:3000/api/orders/${params.id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const req = await fetch(`${BASE_URL}/api/orders/${params.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const res = await req.json();
+  const res = await req.json();
 
-    return {
-      props: { order: res },
-    };
-  } else {
-    const req = await fetch(
-      `https://pizza-store-seven-self.vercel.app/api/orders/${params.id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const res = await req.json();
-
-    return {
-      props: { pizzaList: res },
-    };
-  }
+  return {
+    props: { order: res },
+  };
 };
 
 export default Order;

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, getTotals } from "../../redux/cartSlice";
+import { BASE_URL } from "../../util/setBaseUrl";
 
 const Product = ({ product }) => {
   const [size, setSize] = useState(0);
@@ -143,34 +144,17 @@ const Product = ({ product }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  if (process.env.NODE_ENV === "development") {
-    const req = await fetch(`http://localhost:3000/api/products/${params.id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const res = await req.json();
+  const req = await fetch(`${BASE_URL}/api/products/${params.id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await req.json();
 
-    return {
-      props: { product: res },
-    };
-  } else {
-    const req = await fetch(
-      `https://pizza-store-seven-self.vercel.app/api/products/${params.id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const res = await req.json();
-
-    return {
-      props: { product: res },
-    };
-  }
+  return {
+    props: { product: res },
+  };
 };
 
 export default Product;
