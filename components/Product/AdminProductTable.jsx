@@ -36,6 +36,7 @@ const AdminProductTable = ({
                     height={50}
                     objectFit="cover"
                     alt=""
+                    className={styles.image}
                   />
                 </td>
                 <td>{product._id.slice(0, 5)}...</td>

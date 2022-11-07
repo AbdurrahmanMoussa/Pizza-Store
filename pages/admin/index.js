@@ -18,9 +18,6 @@ const Admin = ({ products }) => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      setPizzaList(
-        JSON.stringify(pizzaList.filter((pizza) => pizza._id !== id))
-      );
 
       return router.reload();
     } catch (err) {

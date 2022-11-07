@@ -23,15 +23,13 @@ const Product = ({ product }) => {
 
   const handleSize = (index) => {
     if (product?.prices) {
-      const diff = product?.prices[index] - product?.prices[size];
+      const differenceInPrice = product?.prices[index] - product?.prices[size];
       setSize(index);
-
-      console.log(product);
 
       {
         /* add difference in price to original price */
       }
-      changePrice(diff);
+      changePrice(differenceInPrice);
     }
   };
 
@@ -63,10 +61,12 @@ const Product = ({ product }) => {
         <div className={styles.imgContainer}>
           <Image
             src={product.image}
-            layout="fill"
+            width="400px"
+            height="400px"
             objectFit="contain"
             alt=""
             priority
+            className={styles.image}
           />
         </div>
       </div>

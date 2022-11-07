@@ -98,9 +98,9 @@ const AdminAddProduct = ({ setClose, close }) => {
         body: JSON.stringify(newProduct),
       });
 
-      router.push("/admin");
       setClose(true);
       setIsLoading(false);
+      return router.reload();
     } catch (err) {
       console.log(err);
     }
