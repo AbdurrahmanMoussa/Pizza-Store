@@ -16,7 +16,7 @@ const handler = (req, res) => {
           sameSite: "strict",
           path: "/",
           httpOnly: process.env.NODE_ENV !== "development" ? true : false,
-          secure: process.env.NODE_ENV !== "development",
+          secure: process.env.NODE_ENV !== "development" ? true : false,
         })
       );
 
